@@ -1,0 +1,222 @@
+body{
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    font-weight: bold;
+    
+}
+
+body:before{
+    content:'';
+    display: block;
+    position: absolute;
+    left:0;
+    top: -150px;
+    width: 100%;
+    height: 140%;
+    opacity: 0.5;
+    background-image: url(./Images/background_dice.jpg);
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    background-size: cover;
+    z-index: 0;
+}
+
+#btn_new_game{
+    z-index: 5;
+}
+
+.devant{
+    z-index: 2;
+    opacity: 1;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+    background-color: white;
+    z-index: 3;
+}
+
+.txt_btn{
+    margin-right: 2em;
+    text-decoration: underline;
+    font-size: 1.2em;
+    
+}
+
+#regles{
+    text-align: justify;
+    margin: 2em;
+}
+
+.apparition{
+    animation-duration: 3s;
+    animation-name: slidein;
+}
+
+.disparition{
+    animation-duration: 3s;
+    animation-name: slideout;
+}
+
+@keyframes slidein{
+    from{
+        margin-top: -10.5%;
+    }
+    to{
+        margin-top: 2%;
+    }
+}
+
+@keyframes slideout {
+    from{
+        margin-top: 2%;
+    }
+    to{
+        margin-top: -10.5%;
+    }
+    
+}
+
+#main{
+    display: flex;
+    flex-direction: row;
+}
+
+.joueur{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+
+.comptes{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+}
+
+.img_indic{
+    width: 1.2em;
+}
+
+.intitule{
+    display: flex;
+    flex-direction: column;
+    height: 25em;
+    justify-content: space-around;
+}
+
+.entree{
+    display: flex;
+    flex-direction: column;
+    height: 25em;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+
+.nom{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.centre{
+    text-align: center;
+}
+
+.marge_droite{
+    margin-right: 0.2em;
+}
+
+.txt_barre{
+    text-decoration: line-through;
+}
+
+.box{
+    width: 4em;
+    height: 1em;
+}
+
+.hide{
+    display: none;
+}
+
+#accueil{
+    margin: 2em;
+}
+
+#intro{
+    margin-bottom: 1em;
+}
+
+.div_choix{
+    width: 250px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.div_choix-hide{
+    display: none;
+}
+
+.choix{
+    width: 70%;
+    height: 100%;
+    font-size: 1em;
+    border-radius: 5px;
+}
+
+::placeholder{
+    color:#9f0303b8
+}
+
+.bouton{
+    width: auto;
+    height: auto;
+    font-size: 0.8em;
+    padding:5px;
+    margin-left: 10px;
+    background-color: #9F0304;
+    font-weight: bold;
+    text-align: center;
+    border: 2px solid #5D6063;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color : black;
+    z-index: 2;
+    opacity: 1;
+}
+
+.bouton_plus_moins{
+    padding: 0px;
+    width: 20px;
+    height: 20px;
+    font-weight: normal;
+}
+
+.bouton_hide{
+    display: none;
+}
+
+#new_game{
+    margin-top: 2em;
+    text-align: center;
+    z-index: 3;
+}
+
+/* 
+#FF0604
+#9F0304
+#3E0905
+#80604B
+#FFFFE7
+ */
