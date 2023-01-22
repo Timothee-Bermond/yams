@@ -1,45 +1,40 @@
-init = false
-
-if(init == false){
-    fetch('/initialisation')
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-        if(data.nombreJoueurs == 1){
-            document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
-            document.getElementById('joueur1').classList.remove('hide')
-            document.getElementById('btn_new_game').classList.remove('hide')
-        }
-        else if(data.nombreJoueurs == 2){
-            document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
-            document.getElementById('joueur1').classList.remove('hide')
-            document.getElementById('nom_j2').textContent = data.nameJ2.split('"')[1]
-            document.getElementById('joueur2').classList.remove('hide')
-            document.getElementById('btn_new_game').classList.remove('hide')
-        }
-        else if(data.nombreJoueurs == 3){
-            document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
-            document.getElementById('joueur1').classList.remove('hide')
-            document.getElementById('nom_j2').textContent = data.nameJ2.split('"')[1]
-            document.getElementById('joueur2').classList.remove('hide')
-            document.getElementById('nom_j3').textContent = data.nameJ3.split('"')[1]
-            document.getElementById('joueur3').classList.remove('hide')
-            document.getElementById('btn_new_game').classList.remove('hide')
-        }
-        else if(data.nombreJoueurs == 4){
-            document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
-            document.getElementById('joueur1').classList.remove('hide')
-            document.getElementById('nom_j2').textContent = data.nameJ2.split('"')[1]
-            document.getElementById('joueur2').classList.remove('hide')
-            document.getElementById('nom_j3').textContent = data.nameJ3.split('"')[1]
-            document.getElementById('joueur3').classList.remove('hide')
-            document.getElementById('nom_j4').textContent = data.nameJ4.split('"')[1]
-            document.getElementById('joueur4').classList.remove('hide')
-            document.getElementById('btn_new_game').classList.remove('hide')
-        }
+fetch('/initialisation')
+.then(response => response.json())
+.then(data => {
+    if(data.nombreJoueurs == 1){
+        document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
+        document.getElementById('joueur1').classList.remove('hide')
+        document.getElementById('btn_new_game').classList.remove('hide')
+    }
+    else if(data.nombreJoueurs == 2){
+        document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
+        document.getElementById('joueur1').classList.remove('hide')
+        document.getElementById('nom_j2').textContent = data.nameJ2.split('"')[1]
+        document.getElementById('joueur2').classList.remove('hide')
+        document.getElementById('btn_new_game').classList.remove('hide')
+    }
+    else if(data.nombreJoueurs == 3){
+        document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
+        document.getElementById('joueur1').classList.remove('hide')
+        document.getElementById('nom_j2').textContent = data.nameJ2.split('"')[1]
+        document.getElementById('joueur2').classList.remove('hide')
+        document.getElementById('nom_j3').textContent = data.nameJ3.split('"')[1]
+        document.getElementById('joueur3').classList.remove('hide')
+        document.getElementById('btn_new_game').classList.remove('hide')
+    }
+    else if(data.nombreJoueurs == 4){
+        document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
+        document.getElementById('joueur1').classList.remove('hide')
+        document.getElementById('nom_j2').textContent = data.nameJ2.split('"')[1]
+        document.getElementById('joueur2').classList.remove('hide')
+        document.getElementById('nom_j3').textContent = data.nameJ3.split('"')[1]
+        document.getElementById('joueur3').classList.remove('hide')
+        document.getElementById('nom_j4').textContent = data.nameJ4.split('"')[1]
+        document.getElementById('joueur4').classList.remove('hide')
+        document.getElementById('btn_new_game').classList.remove('hide')
+    }
         
-    })
-}
+})
 
 document.getElementById('btn_regles').addEventListener('click',() =>{
     document.getElementById('btn_regles').classList.add('hide');
