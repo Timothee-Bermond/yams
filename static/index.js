@@ -82,11 +82,11 @@ document.getElementById("bouton_suivant").addEventListener("click", () => {
     };
     fetch('/create',{
       method:'POST',
-/*       credentials: true, */
+      credentials: 'include',
       headers:{
         'Content-Type': 'application/json',
-        'Players':JSON.stringify(players)
       },
+      body:JSON.stringify(players)
     })
     .then(
       window.location.replace('./yams.html')

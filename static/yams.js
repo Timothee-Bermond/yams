@@ -2,34 +2,34 @@ fetch('/initialisation')
 .then(response => response.json())
 .then(data => {
     if(data.nombreJoueurs == 1){
-        document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
+        document.getElementById('nom_j1').textContent = data.nameJ1
         document.getElementById('joueur1').classList.remove('hide')
         document.getElementById('btn_new_game').classList.remove('hide')
     }
     else if(data.nombreJoueurs == 2){
-        document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
+        document.getElementById('nom_j1').textContent = data.nameJ1
         document.getElementById('joueur1').classList.remove('hide')
-        document.getElementById('nom_j2').textContent = data.nameJ2.split('"')[1]
+        document.getElementById('nom_j2').textContent = data.nameJ2
         document.getElementById('joueur2').classList.remove('hide')
         document.getElementById('btn_new_game').classList.remove('hide')
     }
     else if(data.nombreJoueurs == 3){
-        document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
+        document.getElementById('nom_j1').textContent = data.nameJ1
         document.getElementById('joueur1').classList.remove('hide')
-        document.getElementById('nom_j2').textContent = data.nameJ2.split('"')[1]
+        document.getElementById('nom_j2').textContent = data.nameJ2
         document.getElementById('joueur2').classList.remove('hide')
-        document.getElementById('nom_j3').textContent = data.nameJ3.split('"')[1]
+        document.getElementById('nom_j3').textContent = data.nameJ3
         document.getElementById('joueur3').classList.remove('hide')
         document.getElementById('btn_new_game').classList.remove('hide')
     }
     else if(data.nombreJoueurs == 4){
-        document.getElementById('nom_j1').textContent = data.nameJ1.split('"')[1]
+        document.getElementById('nom_j1').textContent = data.nameJ1
         document.getElementById('joueur1').classList.remove('hide')
-        document.getElementById('nom_j2').textContent = data.nameJ2.split('"')[1]
+        document.getElementById('nom_j2').textContent = data.nameJ2
         document.getElementById('joueur2').classList.remove('hide')
-        document.getElementById('nom_j3').textContent = data.nameJ3.split('"')[1]
+        document.getElementById('nom_j3').textContent = data.nameJ3
         document.getElementById('joueur3').classList.remove('hide')
-        document.getElementById('nom_j4').textContent = data.nameJ4.split('"')[1]
+        document.getElementById('nom_j4').textContent = data.nameJ4
         document.getElementById('joueur4').classList.remove('hide')
         document.getElementById('btn_new_game').classList.remove('hide')
     }
@@ -163,13 +163,12 @@ for(const combi of list_total){
                 pts_J1[pts] = parseInt(pts_J1[pts])
             }
         }
-        console.log(pts_J1)
         fetch('/changeJ1',{
                 method:'POST',
                 headers:{
-                  'Content-Type': 'application/json',
-                  'Players':JSON.stringify(pts_J1)
+                  'Content-Type': 'application/json'
                 },
+                body: JSON.stringify(pts_J1)
             }).then(response => response.json())
             .then(data => {
                 document.getElementById('pts_sommej1').textContent = data.sommeJ1
@@ -272,9 +271,9 @@ for(const combi of list_total){
         fetch('/changeJ2',{
             method:'POST',
             headers:{
-              'Content-Type': 'application/json',
-              'Players':JSON.stringify(pts_J2)
+              'Content-Type': 'application/json'
             },
+            body:JSON.stringify(pts_J2)
         }).then(response => response.json())
         .then(data => {
             document.getElementById('pts_sommej2').textContent = data.sommeJ2
@@ -377,9 +376,9 @@ for(const combi of list_total){
         fetch('/changeJ3',{
             method:'POST',
             headers:{
-              'Content-Type': 'application/json',
-              'Players':JSON.stringify(pts_J3)
+              'Content-Type': 'application/json'
             },
+            body:JSON.stringify(pts_J3)
         }).then(response => response.json())
         .then(data => {
             document.getElementById('pts_sommej3').textContent = data.sommeJ3
@@ -481,9 +480,9 @@ for(const combi of list_total){
         fetch('/changeJ4',{
             method:'POST',
             headers:{
-              'Content-Type': 'application/json',
-              'Players':JSON.stringify(pts_J4)
+              'Content-Type': 'application/json'
             },
+            body:JSON.stringify(pts_J4)
         }).then(response => response.json())
         .then(data => {
             document.getElementById('pts_sommej4').textContent = data.sommeJ4

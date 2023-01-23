@@ -4,6 +4,8 @@ const express = require('express')
 
 const cookieParser = require('cookie-parser')
 
+const bodyParser = require('body-parser')
+
 const db = require('./db')
 
 const app = express()
@@ -18,17 +20,27 @@ app.use("/static", express.static(path.join(__dirname, '/static')))
 
 app.use(cookieParser())
 
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
+
+
 app.post("/create", (req, res) => {
   db.Partie.create({
   }).then((partie) => {
-    parametres = req.rawHeaders.toString().split("{")[1].split("}")[0]
-    partie.nombreJoueurs = parametres.split(",")[0].split(":")[1]
-    partie.nameJ1 = parametres.split(",")[1].split(":")[1]
-    partie.nameJ2 = parametres.split(",")[2].split(":")[1]
-    partie.nameJ3 = parametres.split(",")[3].split(":")[1]
-    partie.nameJ4 = parametres.split(",")[4].split(":")[1]
-    partie.save()
-    res.cookie("id", partie.id).send('ok')
+    res.clearCookie('id')
+    db.Partie.findByPk(partie.id)
+    .then((partie) => {
+      res.cookie("id", partie.id).send('ok')
+      db.Partie.findByPk(partie.id)
+      .then((data)=> {
+        data.nombreJoueurs = req.body.nbrPlayers
+        data.nameJ1 = req.body.player1
+        data.nameJ2 = req.body.player2
+        data.nameJ3 = req.body.player3
+        data.nameJ4 = req.body.player4
+        data.save()
+      })
+    })
   })
 })
 
@@ -41,25 +53,24 @@ app.use('/initialisation', (req, res) => {
 })
 
 app.use('/changeJ1', (req, res) => {
-  pts_J1 = req.rawHeaders.toString().split("{")[1].split("}")[0]
   id = req.cookies.id
   db.Partie.findByPk(id)
   .then((data) => {
-    data.nombre1J1 = parseInt(pts_J1.split(",")[0].split(":")[1])
-    data.nombre2J1 = parseInt(pts_J1.split(",")[1].split(":")[1])
-    data.nombre3J1 = parseInt(pts_J1.split(",")[2].split(":")[1])
-    data.nombre4J1 = parseInt(pts_J1.split(",")[3].split(":")[1])
-    data.nombre5J1 = parseInt(pts_J1.split(",")[4].split(":")[1])
-    data.nombre6J1 = parseInt(pts_J1.split(",")[5].split(":")[1])
-    data.brelanJ1 = parseInt(pts_J1.split(",")[6].split(":")[1])
-    data.carreJ1 = parseInt(pts_J1.split(",")[7].split(":")[1])
-    data.fullJ1 = parseInt(pts_J1.split(",")[8].split(":")[1])
-    data.psJ1 = parseInt(pts_J1.split(",")[9].split(":")[1])
-    data.gsJ1 = parseInt(pts_J1.split(",")[10].split(":")[1])
-    data.yamsJ1 = parseInt(pts_J1.split(",")[11].split(":")[1])
-    data.yams2J1 = parseInt(pts_J1.split(",")[12].split(":")[1])
-    data.yams3J1 = parseInt(pts_J1.split(",")[13].split(":")[1])
-    data.chanceJ1 = parseInt(pts_J1.split(",")[14].split(":")[1])
+    data.nombre1J1 = req.body.nombre1J1
+    data.nombre2J1 = req.body.nombre2J1
+    data.nombre3J1 = req.body.nombre3J1
+    data.nombre4J1 = req.body.nombre4J1
+    data.nombre5J1 = req.body.nombre5J1
+    data.nombre6J1 = req.body.nombre6J1
+    data.brelanJ1 = req.body.brelanJ1
+    data.carreJ1 = req.body.carreJ1
+    data.fullJ1 = req.body.fullJ1
+    data.psJ1 = req.body.psJ1
+    data.gsJ1 = req.body.gsJ1
+    data.yamsJ1 = req.body.yamsJ1
+    data.yams2J1 = req.body.yams2J1
+    data.yams3J1 = req.body.yams3J1
+    data.chanceJ1 = req.body.chanceJ1
     data.sommeJ1 = calcul.somme(data.nombre1J1, data.nombre2J1, data.nombre3J1, data.nombre4J1, data.nombre5J1, data.nombre6J1)
     data.totalJ1 = calcul.total(data.sommeJ1, data.brelanJ1, data. carreJ1, data.fullJ1, data.psJ1, data.gsJ1, data.yamsJ1, data.yams2J1, data.yams3J1, data.chanceJ1)
     data.save()
@@ -69,25 +80,24 @@ app.use('/changeJ1', (req, res) => {
 })
 
 app.use('/changeJ2', (req, res) => {
-  pts_J2 = req.rawHeaders.toString().split("{")[1].split("}")[0]
   id = req.cookies.id
   db.Partie.findByPk(id)
   .then((data) => {
-    data.nombre1J2 = parseInt(pts_J2.split(",")[0].split(":")[1])
-    data.nombre2J2 = parseInt(pts_J2.split(",")[1].split(":")[1])
-    data.nombre3J2 = parseInt(pts_J2.split(",")[2].split(":")[1])
-    data.nombre4J2 = parseInt(pts_J2.split(",")[3].split(":")[1])
-    data.nombre5J2 = parseInt(pts_J2.split(",")[4].split(":")[1])
-    data.nombre6J2 = parseInt(pts_J2.split(",")[5].split(":")[1])
-    data.brelanJ2 = parseInt(pts_J2.split(",")[6].split(":")[1])
-    data.carreJ2 = parseInt(pts_J2.split(",")[7].split(":")[1])
-    data.fullJ2 = parseInt(pts_J2.split(",")[8].split(":")[1])
-    data.psJ2 = parseInt(pts_J2.split(",")[9].split(":")[1])
-    data.gsJ2 = parseInt(pts_J2.split(",")[10].split(":")[1])
-    data.yamsJ2 = parseInt(pts_J2.split(",")[11].split(":")[1])
-    data.yams2J2 = parseInt(pts_J2.split(",")[12].split(":")[1])
-    data.yams3J2 = parseInt(pts_J2.split(",")[13].split(":")[1])
-    data.chanceJ2 = parseInt(pts_J2.split(",")[14].split(":")[1])
+    data.nombre1J2 = req.body.nombre1J2
+    data.nombre2J2 = req.body.nombre2J2
+    data.nombre3J2 = req.body.nombre3J2
+    data.nombre4J2 = req.body.nombre4J2
+    data.nombre5J2 = req.body.nombre5J2
+    data.nombre6J2 = req.body.nombre6J2
+    data.brelanJ2 = req.body.brelanJ2
+    data.carreJ2 = req.body.carreJ2
+    data.fullJ2 = req.body.fullJ2
+    data.psJ2 = req.body.psJ2
+    data.gsJ2 = req.body.gsJ2
+    data.yamsJ2 = req.body.yamsJ2
+    data.yams2J2 = req.body.yams2J2
+    data.yams3J2 = req.body.yams3J2
+    data.chanceJ2 = req.body.chanceJ2
     data.sommeJ2 = calcul.somme(data.nombre1J2, data.nombre2J2, data.nombre3J2, data.nombre4J2, data.nombre5J2, data.nombre6J2)
     data.totalJ2 = calcul.total(data.sommeJ2, data.brelanJ2, data. carreJ2, data.fullJ2, data.psJ2, data.gsJ2, data.yamsJ2, data.yams2J2, data.yams3J2, data.chanceJ2)
     data.save()
@@ -97,25 +107,24 @@ app.use('/changeJ2', (req, res) => {
 })
 
 app.use('/changeJ3', (req, res) => {
-  pts_J3 = req.rawHeaders.toString().split("{")[1].split("}")[0]
   id = req.cookies.id
   db.Partie.findByPk(id)
   .then((data) => {
-    data.nombre1J3 = parseInt(pts_J3.split(",")[0].split(":")[1])
-    data.nombre2J3 = parseInt(pts_J3.split(",")[1].split(":")[1])
-    data.nombre3J3 = parseInt(pts_J3.split(",")[2].split(":")[1])
-    data.nombre4J3 = parseInt(pts_J3.split(",")[3].split(":")[1])
-    data.nombre5J3 = parseInt(pts_J3.split(",")[4].split(":")[1])
-    data.nombre6J3 = parseInt(pts_J3.split(",")[5].split(":")[1])
-    data.brelanJ3 = parseInt(pts_J3.split(",")[6].split(":")[1])
-    data.carreJ3 = parseInt(pts_J3.split(",")[7].split(":")[1])
-    data.fullJ3 = parseInt(pts_J3.split(",")[8].split(":")[1])
-    data.psJ3 = parseInt(pts_J3.split(",")[9].split(":")[1])
-    data.gsJ3 = parseInt(pts_J3.split(",")[10].split(":")[1])
-    data.yamsJ3 = parseInt(pts_J3.split(",")[11].split(":")[1])
-    data.yams2J3 = parseInt(pts_J3.split(",")[12].split(":")[1])
-    data.yams3J3 = parseInt(pts_J3.split(",")[13].split(":")[1])
-    data.chanceJ3 = parseInt(pts_J3.split(",")[14].split(":")[1])
+    data.nombre1J3 = req.body.nombre1J3
+    data.nombre2J3 = req.body.nombre2J3
+    data.nombre3J3 = req.body.nombre3J3
+    data.nombre4J3 = req.body.nombre4J3
+    data.nombre5J3 = req.body.nombre5J3
+    data.nombre6J3 = req.body.nombre6J3
+    data.brelanJ3 = req.body.brelanJ3
+    data.carreJ3 = req.body.carreJ3
+    data.fullJ3 = req.body.fullJ3
+    data.psJ3 = req.body.psJ3
+    data.gsJ3 = req.body.gsJ3
+    data.yamsJ3 = req.body.yamsJ3
+    data.yams2J3 = req.body.yams2J3
+    data.yams3J3 = req.body.yams3J3
+    data.chanceJ3 = req.body.chanceJ3
     data.sommeJ3 = calcul.somme(data.nombre1J3, data.nombre2J3, data.nombre3J3, data.nombre4J3, data.nombre5J3, data.nombre6J3)
     data.totalJ3 = calcul.total(data.sommeJ3, data.brelanJ3, data. carreJ3, data.fullJ3, data.psJ3, data.gsJ3, data.yamsJ3, data.yams2J3, data.yams3J3, data.chanceJ3)
     data.save()
@@ -125,25 +134,24 @@ app.use('/changeJ3', (req, res) => {
 })
 
 app.use('/changeJ4', (req, res) => {
-  pts_J4 = req.rawHeaders.toString().split("{")[1].split("}")[0]
   id = req.cookies.id
   db.Partie.findByPk(id)
   .then((data) => {
-    data.nombre1J4 = parseInt(pts_J4.split(",")[0].split(":")[1])
-    data.nombre2J4 = parseInt(pts_J4.split(",")[1].split(":")[1])
-    data.nombre3J4 = parseInt(pts_J4.split(",")[2].split(":")[1])
-    data.nombre4J4 = parseInt(pts_J4.split(",")[3].split(":")[1])
-    data.nombre5J4 = parseInt(pts_J4.split(",")[4].split(":")[1])
-    data.nombre6J4 = parseInt(pts_J4.split(",")[5].split(":")[1])
-    data.brelanJ4 = parseInt(pts_J4.split(",")[6].split(":")[1])
-    data.carreJ4 = parseInt(pts_J4.split(",")[7].split(":")[1])
-    data.fullJ4 = parseInt(pts_J4.split(",")[8].split(":")[1])
-    data.psJ4 = parseInt(pts_J4.split(",")[9].split(":")[1])
-    data.gsJ4 = parseInt(pts_J4.split(",")[10].split(":")[1])
-    data.yamsJ4 = parseInt(pts_J4.split(",")[11].split(":")[1])
-    data.yams2J4 = parseInt(pts_J4.split(",")[12].split(":")[1])
-    data.yams3J4 = parseInt(pts_J4.split(",")[13].split(":")[1])
-    data.chanceJ4 = parseInt(pts_J4.split(",")[14].split(":")[1])
+    data.nombre1J4 = req.body.nombre1J4
+    data.nombre2J4 = req.body.nombre2J4
+    data.nombre3J4 = req.body.nombre3J4
+    data.nombre4J4 = req.body.nombre4J4
+    data.nombre5J4 = req.body.nombre5J4
+    data.nombre6J4 = req.body.nombre6J4
+    data.brelanJ4 = req.body.brelanJ4
+    data.carreJ4 = req.body.carreJ4
+    data.fullJ4 = req.body.fullJ4
+    data.psJ4 = req.body.psJ4
+    data.gsJ4 = req.body.gsJ4
+    data.yamsJ4 = req.body.yamsJ4
+    data.yams2J4 = req.body.yams2J4
+    data.yams3J4 = req.body.yams3J4
+    data.chanceJ4 = req.body.chanceJ4
     data.sommeJ4 = calcul.somme(data.nombre1J4, data.nombre2J4, data.nombre3J4, data.nombre4J4, data.nombre5J4, data.nombre6J4)
     data.totalJ4 = calcul.total(data.sommeJ4, data.brelanJ4, data. carreJ4, data.fullJ4, data.psJ4, data.gsJ4, data.yamsJ4, data.yams2J4, data.yams3J4, data.chanceJ4)
     data.save()
