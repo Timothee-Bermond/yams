@@ -82,6 +82,7 @@ document.getElementById("bouton_suivant").addEventListener("click", () => {
     };
     fetch('/create',{
       method:'POST',
+/*       credentials: true, */
       headers:{
         'Content-Type': 'application/json',
         'Players':JSON.stringify(players)

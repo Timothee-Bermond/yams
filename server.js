@@ -18,7 +18,7 @@ app.use("/static", express.static(path.join(__dirname, '/static')))
 
 app.use(cookieParser())
 
-app.use("/create", (req, res) => {
+app.post("/create", (req, res) => {
   db.Partie.create({
   }).then((partie) => {
     parametres = req.rawHeaders.toString().split("{")[1].split("}")[0]
@@ -27,9 +27,8 @@ app.use("/create", (req, res) => {
     partie.nameJ2 = parametres.split(",")[2].split(":")[1]
     partie.nameJ3 = parametres.split(",")[3].split(":")[1]
     partie.nameJ4 = parametres.split(",")[4].split(":")[1]
-    res.cookie("id", partie.id)
     partie.save()
-    res.end()
+    res.cookie("id", partie.id).send('ok')
   })
 })
 
