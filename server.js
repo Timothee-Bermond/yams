@@ -29,16 +29,16 @@ app.post("/create", (req, res) => {
   }).then((partie) => {
     res.clearCookie('id')
     db.Partie.findByPk(partie.id)
-    .then((partie) => {
-      res.cookie("id", partie.id).send('ok')
-      db.Partie.findByPk(partie.id)
-      .then((data)=> {
-        data.nombreJoueurs = req.body.nbrPlayers
-        data.nameJ1 = req.body.player1
-        data.nameJ2 = req.body.player2
-        data.nameJ3 = req.body.player3
-        data.nameJ4 = req.body.player4
-        data.save()
+    .then((partiebis) => {
+      res.cookie("id", partiebis.id).send('ok')
+      db.Partie.findByPk(partiebis.id)
+      .then((partieter)=> {
+        partieter.nombreJoueurs = req.body.nbrPlayers
+        partieter.nameJ1 = req.body.player1
+        partieter.nameJ2 = req.body.player2
+        partieter.nameJ3 = req.body.player3
+        partieter.nameJ4 = req.body.player4
+        partieter.save()
       })
     })
   })
