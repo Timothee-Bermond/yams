@@ -30,7 +30,7 @@ app.post("/create", (req, res) => {
     res.clearCookie('id')
     db.Partie.findByPk(partie.id)
     .then((partiebis) => {
-      res.cookie("id", partiebis.id).send('ok')
+      res.cookie("id", partiebis.id, {httpOnly:false} ).send('ok')
       db.Partie.findByPk(partiebis.id)
       .then((partieter)=> {
         partieter.nombreJoueurs = req.body.nbrPlayers
