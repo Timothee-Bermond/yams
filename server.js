@@ -27,25 +27,21 @@ app.use(bodyParser.json())
 app.post("/create", (req, res) => {
   db.Partie.create({
   }).then((partie) => {
-    res.clearCookie('id')
-    db.Partie.findByPk(partie.id)
-    .then((partiebis) => {
-      res.cookie("id", partiebis.id, {httpOnly:false} ).send('ok')
-      db.Partie.findByPk(partiebis.id)
-      .then((partieter)=> {
-        partieter.nombreJoueurs = req.body.nbrPlayers
-        partieter.nameJ1 = req.body.player1
-        partieter.nameJ2 = req.body.player2
-        partieter.nameJ3 = req.body.player3
-        partieter.nameJ4 = req.body.player4
-        partieter.save()
-      })
-    })
+      partie.nombreJoueurs = req.body.nbrPlayers
+      partie.nameJ1 = req.body.player1
+      partie.nameJ2 = req.body.player2
+      partie.nameJ3 = req.body.player3
+      partie.nameJ4 = req.body.player4
+      partie.save()
+      res.cookie("id", partie.id)
+      res.end()
   })
 })
 
+
 app.use('/initialisation', (req, res) => {
   id = req.cookies.id
+  console.log(id)
   db.Partie.findByPk(id)
   .then((data) => {
     res.json(data)
