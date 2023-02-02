@@ -1,17 +1,21 @@
+document.getElementById('btn_new_game').addEventListener("click", () => {
+    if (window.confirm("Nouvelle partie?")){
+        document.location.replace('./index.html')
+    }
+})
+
 fetch('/initialisation')
 .then(response => response.json())
 .then(data => {
     if(data.nombreJoueurs == 1){
         document.getElementById('nom_j1').textContent = data.nameJ1
         document.getElementById('joueur1').classList.remove('hide')
-        document.getElementById('btn_new_game').classList.remove('hide')
     }
     else if(data.nombreJoueurs == 2){
         document.getElementById('nom_j1').textContent = data.nameJ1
         document.getElementById('joueur1').classList.remove('hide')
         document.getElementById('nom_j2').textContent = data.nameJ2
         document.getElementById('joueur2').classList.remove('hide')
-        document.getElementById('btn_new_game').classList.remove('hide')
     }
     else if(data.nombreJoueurs == 3){
         document.getElementById('nom_j1').textContent = data.nameJ1
@@ -20,7 +24,6 @@ fetch('/initialisation')
         document.getElementById('joueur2').classList.remove('hide')
         document.getElementById('nom_j3').textContent = data.nameJ3
         document.getElementById('joueur3').classList.remove('hide')
-        document.getElementById('btn_new_game').classList.remove('hide')
     }
     else if(data.nombreJoueurs == 4){
         document.getElementById('nom_j1').textContent = data.nameJ1
@@ -31,7 +34,6 @@ fetch('/initialisation')
         document.getElementById('joueur3').classList.remove('hide')
         document.getElementById('nom_j4').textContent = data.nameJ4
         document.getElementById('joueur4').classList.remove('hide')
-        document.getElementById('btn_new_game').classList.remove('hide')
     }
         
 })
@@ -491,8 +493,3 @@ for(const combi of list_total){
     }
 }
 
-document.getElementById('btn_new_game').addEventListener("click", () => {
-    if (window.confirm("Nouvelle partie?")){
-        document.location.replace('./index.html')
-    }
-})

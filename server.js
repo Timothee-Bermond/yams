@@ -41,7 +41,7 @@ app.post("/create", (req, res) => {
 
 app.use('/initialisation', (req, res) => {
   id = req.cookies.id
-  console.log(id)
+  console.log(req.cookies)
   db.Partie.findByPk(id)
   .then((data) => {
     res.json(data)
