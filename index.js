@@ -8,7 +8,7 @@ const io = require("socket.io")(http)
 const calcul = require('./back/calcul_score')
 
 const hostname = '127.0.0.1'
-const port = 3001
+const port = 10436
 
 app.use("/static", express.static(path.join(__dirname, '/static')))
 
