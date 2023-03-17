@@ -36,6 +36,8 @@ app.post("/create", (req, res) => {
 
 app.use('/initialisation', (req, res) => {
     id_partie = req.cookies.id
+    /* console.log(id_partie)
+    console.log(list_parties[id_partie]) */
     var info = {
         id: id_partie,
         nombreJoueurs: list_parties[id_partie]['nombreJoueurs'],
@@ -48,7 +50,8 @@ app.use('/initialisation', (req, res) => {
   })
 
 app.use('/rejoindre', (req, res) => {
-    res.cookie("info")
+    res.cookie("id",req.body.id_partie)
+    res.end()
 })
 
 app.get('/', (req, res) => {
