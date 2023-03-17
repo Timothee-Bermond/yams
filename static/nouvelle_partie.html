@@ -24,12 +24,30 @@
         Il peut arriver lors d’un tour que le résultat ne convienne pas au joueur et qu’il se dise qu’il pourrait faire un plus grand score sur un autre tour. Il peut alors choisir de barrer une autre case à la place. Bien entendu, il ne pourra plus faire cette combinaison par la suite.<br>
         Lorsque le total intermédiaire est égal ou supérieur à 63 points, un bonus de 35 points supplémentaires est accordé, ce qui peut faire la différence au décompte final. Soyez donc stratégique !
     </div>
-    <div id="index" class="devant">
-      <button type="submit" id="bouton_creer" class="bouton">Nouvelle partie</button>
-      <button type="submit" id="bouton_rejoindre" class="bouton">Rejoindre une partie</button>
+    <div id="accueil" class="devant">
+        <h2 id="intro">Entrez le nom des joueurs</h2>
+      <div id="div_choix1" class="div_choix">
+        <input type="text" id="text_choix1" name="text_choix1" placeholder="Premier choix" class="choix" maxlength="10">
+        <button type="submit" id="bouton_add1" class="bouton bouton_plus_moins">+</button>
+      </div>
+      <div id="div_choix2" class="div_choix hide">
+          <input type="text" id="text_choix2" name="text_choix2" placeholder="Deuxième choix" class="choix" maxlength="10">
+          <button type="submit" id="bouton_add2" class="bouton bouton_plus_moins">+</button>
+          <button type="submit" id="bouton_supp2" class="bouton bouton_plus_moins">-</button>
+      </div>
+      <div id="div_choix3" class="div_choix hide">
+        <input type="text" id="text_choix3" name="text_choix3" placeholder="Troisième choix" class="choix" maxlength="10">
+        <button type="submit" id="bouton_add3" class="bouton bouton_plus_moins">+</button>
+        <button type="submit" id="bouton_supp3" class="bouton bouton_plus_moins">-</button>
+      </div>
+      <div id="div_choix4" class="div_choix hide">
+        <input type="text" id="text_choix4" name="text_choix4" placeholder="Quatrième choix" class="choix" maxlength="10">
+        <button type="submit" id="bouton_supp4" class="bouton bouton_plus_moins">-</button>
+      </div>
+      <button type="submit" id="bouton_suivant" class="bouton">Commencer</button>
     </div>
 
     <script src="regles.js"></script>
-    <script src="index.js"></script>
+    <script src="nouvelle_partie.js"></script>
   </body>
 </html>

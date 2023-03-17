@@ -1,7 +1,7 @@
 function calcul_score(points){
     var sommeJ1 = 0
     for (let key in points) {
-        if ( !(points[key] == 'barre') && (key.includes('nombre')) && (key.includes('j1')) ) {
+        if ( !(points[key] == 'barre') && !(points[key] == 'nombreJoueurs') && (key.includes('nombre')) && (key.includes('j1')) ) {
             sommeJ1 += points[key]
         }
     }
@@ -21,7 +21,7 @@ function calcul_score(points){
 
     var sommeJ2 = 0
     for (let key in points) {
-        if ( !(points[key] == 'barre') && (key.includes('nombre')) && (key.includes('j2')) ) {
+        if ( !(points[key] == 'barre') && !(points[key] == 'nombreJoueurs') && (key.includes('nombre')) && (key.includes('j2')) ) {
             sommeJ2 += points[key]
         }
     }
@@ -41,7 +41,7 @@ function calcul_score(points){
 
     var sommeJ3 = 0
     for (let key in points) {
-        if ( !(points[key] == 'barre') && (key.includes('nombre')) && (key.includes('j3')) ) {
+        if ( !(points[key] == 'barre') && !(points[key] == 'nombreJoueurs') && (key.includes('nombre')) && (key.includes('j3')) ) {
             sommeJ3 += points[key]
         }
     }
@@ -60,7 +60,7 @@ function calcul_score(points){
 /* -------------------------------------------------------------------------------------------------------------------------------------- */
 var sommeJ4 = 0
     for (let key in points) {
-        if ( !(points[key] == 'barre') && (key.includes('nombre')) && (key.includes('j4')) ) {
+        if ( !(points[key] == 'barre') && !(points[key] == 'nombreJoueurs') && (key.includes('nombre')) && (key.includes('j4')) ) {
             sommeJ4 += points[key]
         }
     }

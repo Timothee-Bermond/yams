@@ -19,37 +19,45 @@ app.use("/static", express.static(path.join(__dirname, '/static')))
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-let list_parties = [0]
-
-
+let list_parties = []
 
 app.post("/create", (req, res) => {
-    var id_partie = list_parties[list_parties.length - 1] + 1
-    list_parties.push(id_partie)
-    var info = {
-        id: id_partie,
-        nombreJoueurs: req.body.nbrPlayers,
-        nameJ1: req.body.player1,
-        nameJ2: req.body.player2,
-        nameJ3: req.body.player3,
-        nameJ4: req.body.player4
-    }
-    console.log(info)
-    res.cookie("info", info)
+    var id_partie = list_parties.length
+    list_parties.push(points)
+    list_parties[id_partie]['nombreJoueurs'] = req.body.nbrPlayers
+    list_parties[id_partie]['nameJ1'] = req.body.player1
+    list_parties[id_partie]['nameJ2'] = req.body.player2
+    list_parties[id_partie]['nameJ3'] = req.body.player3
+    list_parties[id_partie]['nameJ4'] = req.body.player4
+    res.cookie("id", id_partie)
     res.end()
 })
 
 
 app.use('/initialisation', (req, res) => {
-    console.log(req.cookies.info)
-    res.json(req.cookies.info)
+    id_partie = req.cookies.id
+    var info = {
+        id: id_partie,
+        nombreJoueurs: list_parties[id_partie]['nombreJoueurs'],
+        nameJ1: list_parties[id_partie]['nameJ1'],
+        nameJ2: list_parties[id_partie]['nameJ2'],
+        nameJ3: list_parties[id_partie]['nameJ3'],
+        nameJ4: list_parties[id_partie]['nameJ4']
+    }
+    res.json(info)
   })
+
+app.use('/rejoindre', (req, res) => {
+    res.cookie("info")
+})
 
 app.get('/', (req, res) => {
     res.redirect(301, '/static/index.html')
 })
 
 var points = {
+    nombreJoueurs: 1,
+
     nombre1j1: null,
     nombre2j1: null,
     nombre3j1: null,
@@ -126,8 +134,10 @@ var points = {
 io.on("connection", function (socket) {
     console.log("Client connected")
     socket.on("score", function (data){
-        points[data.id] = parseInt(data.value)
-        calculated_points = calcul.calcul_score(points)
+        id_partie = data.id_partie
+        list_parties[id_partie][data.id] = parseInt(data.value)
+        console.log(list_parties[id_partie])
+        calculated_points = calcul.calcul_score(list_parties[id_partie])
         io.emit("updateScore", calculated_points)
     })
 
@@ -145,5 +155,5 @@ io.on("connection", function (socket) {
 
 
 http.listen(port, function (){
-    /* console.log(`Server running at http://${hostname}:${port}/`); */
+    console.log(`Server running at http://${hostname}:${port}/`);
 })

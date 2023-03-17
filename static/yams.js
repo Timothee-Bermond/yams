@@ -1,7 +1,10 @@
+var id_partie = null
+
 $(function () {
     const socket = io();
     $("input[type=text][name=score]").change(function () {
         reponse = {
+            id_partie: id_partie,
             id: this.id,
             value: this.value
         }
@@ -11,11 +14,13 @@ $(function () {
     $("input[type=checkbox][name=score]").change(function () {
         if (this.checked){
             reponse = {
+                id_partie: id_partie,
                 id: this.id,
                 value: this.value
             }
         } else {
             reponse = {
+                id_partie: id_partie,
                 id: this.id,
                 value: 0
             }
@@ -25,18 +30,22 @@ $(function () {
     })
 
     socket.on("updateScore", function (data) {
+        
         for (let key in data) {
-            if ( !(data[key] === null) && (document.getElementById(key).type == 'text') ) {
-                document.getElementById(key).value = data[key]
-            } else if ( !(data[key] === null) && (document.getElementById(key).type == 'checkbox') ) {
-                if (data[key] == 0) {
-                    document.getElementById(key).checked = false
-                } else {
-                    document.getElementById(key).checked = true
+            if (!(key == 'nombreJoueurs') && !(key.includes('name'))){
+                if ( !(data[key] === null) && (document.getElementById(key).type == 'text') ) {
+                    document.getElementById(key).value = data[key]
+                } else if ( !(data[key] === null) && (document.getElementById(key).type == 'checkbox') ) {
+                    if (data[key] == 0) {
+                        document.getElementById(key).checked = false
+                    } else {
+                        document.getElementById(key).checked = true
+                    }
+                } else if ( !(data[key] === null) && (document.getElementById(key).type == null) ) {
+                    document.getElementById(key).textContent = data[key]
                 }
-            } else if ( !(data[key] === null) && (document.getElementById(key).type == null) ) {
-                document.getElementById(key).textContent = data[key]
             }
+            
         }
     })
 
@@ -70,28 +79,12 @@ $(function () {
     
 })
 
-
-document.getElementById('btn_regles').addEventListener('click',() =>{
-    document.getElementById('btn_regles').classList.add('hide');
-    document.getElementById('btn_retour').classList.remove('hide');
-    document.getElementById('regles').classList.remove('hide');
-    document.getElementById('regles').classList.add('apparition');
-    document.getElementById('regles').classList.remove('disparition');
-})
-
-document.getElementById('btn_retour').addEventListener('click',() =>{
-    document.getElementById('btn_retour').classList.add('hide');
-    document.getElementById('btn_regles').classList.remove('hide');
-    document.getElementById('regles').classList.remove('apparition');
-    document.getElementById('regles').classList.add('disparition');
-    setTimeout(() => {
-        document.getElementById('regles').classList.add('hide');
-  },2800)
-})
-
 fetch('/initialisation')
 .then(response => response.json())
 .then(data => {
+    console.log(data)
+    id_partie = data.id
+    document.getElementById('id_partie').textContent = 'Id de la partie : ' + data.id
     if(data.nombreJoueurs == 1){
         document.getElementById('nom_j1').textContent = data.nameJ1
         document.getElementById('joueur1').classList.remove('hide')
@@ -128,6 +121,6 @@ fetch('/initialisation')
 
 document.getElementById('btn_new_game').addEventListener("click", () => {
     if (window.confirm("Nouvelle partie?")){
-        document.location.reload()
+        document.location.replace('./index.html')
     }
 })
