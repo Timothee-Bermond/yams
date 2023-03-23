@@ -23,12 +23,14 @@ let list_parties = []
 
 app.post("/create", (req, res) => {
     var id_partie = list_parties.length
-    list_parties.push(points)
+    let temp = JSON.stringify(points)
+    list_parties.push(JSON.parse(temp))
     list_parties[id_partie]['nombreJoueurs'] = req.body.nbrPlayers
     list_parties[id_partie]['nameJ1'] = req.body.player1
     list_parties[id_partie]['nameJ2'] = req.body.player2
     list_parties[id_partie]['nameJ3'] = req.body.player3
     list_parties[id_partie]['nameJ4'] = req.body.player4
+    console.log(list_parties)
     res.cookie("id", id_partie)
     res.end()
 })
@@ -58,7 +60,7 @@ app.get('/', (req, res) => {
     res.redirect(301, '/static/index.html')
 })
 
-var points = {
+const points = {
     nombreJoueurs: 1,
 
     nombre1j1: null,
@@ -139,7 +141,7 @@ io.on("connection", function (socket) {
     socket.on("score", function (data){
         id_partie = data.id_partie
         list_parties[id_partie][data.id] = parseInt(data.value)
-        console.log(list_parties[id_partie])
+        /* console.log(list_parties) */
         calculated_points = calcul.calcul_score(list_parties[id_partie])
         io.emit("updateScore", calculated_points)
     })
