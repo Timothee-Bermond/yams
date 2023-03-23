@@ -30,7 +30,6 @@ app.post("/create", (req, res) => {
     list_parties[id_partie]['nameJ2'] = req.body.player2
     list_parties[id_partie]['nameJ3'] = req.body.player3
     list_parties[id_partie]['nameJ4'] = req.body.player4
-    console.log(list_parties)
     res.cookie("id", id_partie)
     res.end()
 })
@@ -141,7 +140,7 @@ io.on("connection", function (socket) {
     socket.on("score", function (data){
         id_partie = data.id_partie
         list_parties[id_partie][data.id] = parseInt(data.value)
-        /* console.log(list_parties) */
+        console.log(list_parties)
         calculated_points = calcul.calcul_score(list_parties[id_partie])
         io.emit("updateScore", calculated_points)
     })
