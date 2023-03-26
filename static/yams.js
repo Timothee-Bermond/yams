@@ -30,23 +30,24 @@ $(function () {
     })
 
     socket.on("updateScore", function (data) {
-        
-        for (let key in data) {
-            if (!(key == 'nombreJoueurs') && !(key.includes('name'))){
-                if ( !(data[key] === null) && (document.getElementById(key).type == 'text') ) {
-                    document.getElementById(key).value = data[key]
-                } else if ( !(data[key] === null) && (document.getElementById(key).type == 'checkbox') ) {
-                    if (data[key] == 0) {
-                        document.getElementById(key).checked = false
-                    } else {
-                        document.getElementById(key).checked = true
+        if (data.partie_id == document.getElementById('id_partie').textContent) {
+            for (let key in data.points) {
+                if (!(key == 'nombreJoueurs') && !(key.includes('name'))){
+                    if ( !(data.points[key] === null) && (document.getElementById(key).type == 'text') ) {
+                        document.getElementById(key).value = data.points[key]
+                    } else if ( !(data.points[key] === null) && (document.getElementById(key).type == 'checkbox') ) {
+                        if (data.points[key] == 0) {
+                            document.getElementById(key).checked = false
+                        } else {
+                            document.getElementById(key).checked = true
+                        }
+                    } else if ( !(data.points[key] === null) && (document.getElementById(key).type == null) ) {
+                        document.getElementById(key).textContent = data.points[key]
                     }
-                } else if ( !(data[key] === null) && (document.getElementById(key).type == null) ) {
-                    document.getElementById(key).textContent = data[key]
                 }
             }
-            
         }
+        
     })
 
     $("input[name=score]").dblclick(function () {
@@ -82,9 +83,8 @@ $(function () {
 fetch('/initialisation')
 .then(response => response.json())
 .then(data => {
-    console.log(data)
     id_partie = data.id
-    document.getElementById('id_partie').textContent = 'Id de la partie : ' + data.id
+    document.getElementById('id_partie').textContent = data.id
     if(data.nombreJoueurs == 1){
         document.getElementById('nom_j1').textContent = data.nameJ1
         document.getElementById('joueur1').classList.remove('hide')
