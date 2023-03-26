@@ -34,7 +34,6 @@ app.post("/create", (req, res) => {
     res.end()
 })
 
-
 app.use('/initialisation', (req, res) => {
     id_partie = req.cookies.id
     /* console.log(id_partie)
@@ -140,9 +139,12 @@ io.on("connection", function (socket) {
     socket.on("score", function (data){
         id_partie = data.id_partie
         list_parties[id_partie][data.id] = parseInt(data.value)
-        console.log(list_parties)
-        calculated_points = calcul.calcul_score(list_parties[id_partie])
-        io.emit("updateScore", calculated_points)
+        list_parties[id_partie] = calcul.calcul_score(list_parties[id_partie])
+        resp = {
+            partie_id : id_partie,
+            points: list_parties[id_partie]
+        }
+        io.emit("updateScore", resp)
     })
 
     socket.on("barre", function(data) {
