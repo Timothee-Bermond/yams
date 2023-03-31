@@ -148,14 +148,24 @@ io.on("connection", function (socket) {
     })
 
     socket.on("barre", function(data) {
-        points[data] = 'barre'
-        calculated_points = calcul.calcul_score(points)
-        io.emit("updateBarre", calculated_points)
+        id_partie = data.id_partie
+        list_parties[id_partie][data.id] = 'barre'
+        list_parties[id_partie] = calcul.calcul_score(list_parties[id_partie])
+        resp = {
+            partie_id : id_partie,
+            points: list_parties[id_partie]
+        }
+        io.emit("updateBarre", resp)
     })
 
     socket.on("remet", function (data){
-        points[data] = null
-        io.emit("updateRemet", data)
+        id_partie = data.id_partie
+        list_parties[id_partie][data.id] = null
+        resp = {
+            partie_id : id_partie,
+            id: data.id
+        }
+        io.emit("updateRemet",resp)
     })
 })
 

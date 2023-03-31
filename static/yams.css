@@ -3,6 +3,7 @@ body{
     flex-direction: column;
     margin: 0px;
     font-weight: bold;
+    height: 100vh;
     
 }
 
@@ -84,19 +85,19 @@ header{
 
 @keyframes slidein{
     from{
-        margin-top: -10.5%;
+        margin-top: -26%;
     }
     to{
-        margin-top: 2%;
+        margin-top: 3.5%;
     }
 }
 
 @keyframes slideout {
     from{
-        margin-top: 2%;
+        margin-top: 3.5%;
     }
     to{
-        margin-top: -10.5%;
+        margin-top: -26%;
     }
     
 }
@@ -181,6 +182,11 @@ header{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 10%;
+}
+
+.btn_index{
+    margin-top: 30px;
 }
 
 #intro{

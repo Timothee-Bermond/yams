@@ -51,31 +51,43 @@ $(function () {
     })
 
     $("input[name=score]").dblclick(function () {
-        socket.emit("barre", this.id)
+        reponse = {
+            id_partie: id_partie,
+            id: this.id
+        }
+        socket.emit("barre", reponse)
     })
 
     socket.on("updateBarre", function (data) {
-        for(let key in data){
-            if(data[key] == 'barre'){
-                document.getElementById('txt_'+key).classList.add('txt_barre');
-                document.getElementById(key).classList.add('hide');
-                document.getElementById('cancel_'+key).classList.remove('hide');
-            } else if ( !(data[key] === null) && (document.getElementById(key).type == null) ) {
-                document.getElementById(key).textContent = data[key]
+        if (data.partie_id == id_partie) {
+            for(let key in data.points){
+                if(data.points[key] == 'barre'){
+                    document.getElementById('txt_'+key).classList.add('txt_barre');
+                    document.getElementById(key).classList.add('hide');
+                    document.getElementById('cancel_'+key).classList.remove('hide');
+                } else if ( !(data.points[key] === null) && !(key == 'nombreJoueurs') && !(key.includes('name')) && (document.getElementById(key).type == null) ) {
+                    document.getElementById(key).textContent = data.points[key]
+                }
             }
         }
-        
     })
 
     $("img[name=img_indic]").click(function () {
-        socket.emit("remet", this.id.split('_')[1])
+        reponse = {
+            id_partie: id_partie,
+            id: this.id.split('_')[1]
+        }
+        socket.emit("remet", reponse)
     })
 
     socket.on("updateRemet", function(data){
-        document.getElementById('txt_'+data).classList.remove('txt_barre');
-        document.getElementById(data).classList.remove('hide');
-        document.getElementById('cancel_'+data).classList.add('hide');
-        document.getElementById(data).checked = false
+        if (data.partie_id == id_partie) {
+            document.getElementById('txt_'+data.id).classList.remove('txt_barre');
+            document.getElementById(data.id).classList.remove('hide');
+            document.getElementById('cancel_'+data.id).classList.add('hide');
+            document.getElementById(data.id).checked = false
+        }
+       
     })
     
 })
